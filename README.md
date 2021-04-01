@@ -11,7 +11,7 @@ For those looking to download and use the app, download the latest release versi
 Instructions:
 1. Download zip file of latest release on the [release page](https://github.com/Natalis-Git/Easy-Switch-Presence/releases/). It can be found under "Assets".
 2. Right click -> extract it to wherever you'd like to store the app
-3. Once extracted, go into the Switch Presence folder and right click "SwitchPresence.exe" and then "Create Shortcut"
+3. Once extracted, go into the Easy Switch Presence folder and right click "SwitchPresence.exe" and then "Create Shortcut"
 4. Put the shortcut wherever you'd like on your desktop or toolbar
 5. Open the app and enjoy. **It may ask you to download some .netcore dependencies the first time you start it up**.
 6. A FAQ will be made soon to answer any questions you may have about the app.
