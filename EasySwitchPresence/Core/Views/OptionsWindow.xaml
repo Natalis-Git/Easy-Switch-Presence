@@ -1,0 +1,186 @@
+﻿<Window x:Class="EasySwitchPresence.Views.OptionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EasySwitchPresence"
+        mc:Ignorable="d"
+        Title="OptionsWindow" 
+        Height="425" 
+        Width="325"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterOwner"
+        Background="#FF58595D">
+
+    <Grid>
+        <Grid x:Name="mainGrid"
+          ShowGridLines="False">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="75"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Settings"
+                   Grid.Row="0"
+                   Grid.Column="1"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontSize="22"
+                   Foreground="White">
+            </TextBlock>
+
+            <Border x:Name="optionsBorder"
+                Grid.Row="1"
+                Grid.ColumnSpan="3"
+                Grid.RowSpan="10"
+                BorderThickness="1" 
+                BorderBrush="Gray"
+                Background="#616161"
+                CornerRadius="15,15,15,15"
+                Width="225">
+            </Border>
+
+            <CheckBox x:Name="showElapsedTimeCheckbox"
+                  Content="Show elapsed time"
+                  ToolTip="Show the amount of time passed on currently displayed Rich Presence"
+                  Grid.Row="2"
+                  Grid.ColumnSpan="3"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Center"
+                  Margin="55,0,0,0"
+                  Foreground="White"
+                  IsChecked="{Binding ShowElapsedTime, Source={x:Static local:AppContext.Settings}}">
+
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.375" ScaleY="1.4"/>
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <CheckBox x:Name="keepSelectedGameCheckbox"
+                  Content="Keep selected game"
+                  ToolTip="Save the last selected game upon exiting the app"
+                  Grid.Row="3"
+                  Grid.ColumnSpan="3"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Center"
+                  Margin="55,0,0,0"
+                  Foreground="White"
+                  IsChecked="{Binding KeepSelectedGame, Source={x:Static local:AppContext.Settings}}">
+
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.375" ScaleY="1.4"/>
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <CheckBox x:Name="closeToTrayCheckbox"
+                  Content="Close to tray"
+                  ToolTip="Keep app running in background instead of exiting when window is closed. Will be accessible on taskbar."
+                  Grid.Row="4"
+                  Grid.ColumnSpan="3"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Center"
+                  Margin="55,0,0,0"
+                  Foreground="White"
+                  IsChecked="{Binding CloseToTray, Source={x:Static local:AppContext.Settings}}"
+                  Checked="CloseToTrayCheckbox_Checked"
+                  Unchecked="CloseToTrayCheckbox_Unchecked">
+
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.375" ScaleY="1.4"/>
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <CheckBox x:Name="disableAfterSetTimeCheckbox"
+                  Content="Disable after:"
+                  ToolTip="Automatically turn off active rich presence after the selected amount of time has passed"
+                  Grid.Row="5"
+                  Grid.ColumnSpan="3"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Center"
+                  Margin="55,0,0,0"
+                  Foreground="White"
+                  IsChecked="{Binding DisableAfterSetTime, Source={x:Static local:AppContext.Settings}}"
+                  Checked="disableAfterSetTimeCheckbox_Checked"
+                  Unchecked="disableAfterSetTimeCheckbox_Unchecked">
+
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.375" ScaleY="1.4"/>
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <!-- FIXME: Radio buttons or their value bindings seem to break upon closing and reopening options window more than once. 
+                        Upon opening, values are lost, and upon more openings, the buttons completely stop functioning.
+                        Binding issue perhaps? Possibly related to closing and reinstantiation of options window...
+            
+                        Addendum: In relation to the amount of closings and reopenings, bug seems to be inconsistant. May take several
+                        tries to recreate the issue. Release build also seems less likely for this bug to occur (coincidence probably?) -->   
+            <RadioButton x:Name="optionOneRadioButton" 
+                     GroupName="TimeToDisable"
+                     Grid.Row="6"
+                     Grid.ColumnSpan="2"
+                     Margin="80,0,0,0"
+                     Content="1 Hour"
+                     Foreground="white"
+                     IsChecked="{Binding DisableAfterOneHour, Source={x:Static local:AppContext.Settings}}">
+            </RadioButton>
+
+            <RadioButton x:Name="optionTwoRadioButton" 
+                     GroupName="TimeToDisable"
+                     Grid.Row="7"
+                     Grid.ColumnSpan="2"
+                     Margin="80,0,0,0"
+                     Content="2 Hours"
+                     Foreground="white"
+                     IsChecked="{Binding DisableAfterTwoHours, Source={x:Static local:AppContext.Settings}}">
+            </RadioButton>
+
+
+            <RadioButton x:Name="optionThreeRadioButton" 
+                     GroupName="TimeToDisable"
+                     Grid.Row="8"
+                     Grid.ColumnSpan="2"
+                     Margin="80,0,0,0"
+                     Content="4 Hours"
+                     Foreground="white"
+                     IsChecked="{Binding DisableAfterFourHours, Source={x:Static local:AppContext.Settings}}">
+            </RadioButton>
+
+            <RadioButton x:Name="optionFourRadioButton" 
+                     GroupName="TimeToDisable"
+                     Grid.Row="9"
+                     Grid.ColumnSpan="2"
+                     Margin="80,0,0,0"
+                     Content="8 Hours"
+                     Foreground="white"
+                     IsChecked="{Binding DisableAfterEightHours, Source={x:Static local:AppContext.Settings}}">
+            </RadioButton>
+
+            <Button x:Name="closeButton"
+                Content="Close"
+                Grid.Row="11"
+                Grid.ColumnSpan="3"
+                Height="30"
+                FontSize="15"
+                Background="White"
+                Click="CloseButton_Click"
+                Width="100"/>
+        </Grid>
+
+    </Grid>
+</Window>

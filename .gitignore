@@ -1,0 +1,28 @@
+
+#### Basic gitignore for those pesky local files that shouldn't be in the remote repository ####
+
+
+# Local Visual Studio and VS Code files
+.vs/
+.vscode/
+
+# Ignore user files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build Folders and files
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/

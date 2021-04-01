@@ -1,0 +1,281 @@
+﻿<Window x:Class="EasySwitchPresence.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EasySwitchPresence"
+        mc:Ignorable="d"
+        Title="Easy Switch Presence" 
+        Height="600" 
+        Width="800"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen"
+        Icon="\Resources\spLogoSmall.ico"
+        RenderOptions.BitmapScalingMode="HighQuality"
+        DataContext="MainViewModel">
+
+    <Grid x:Name="mainGrid"
+          Background="#e4000f"
+          ShowGridLines="False"
+          MouseLeftButtonDown="mainGrid_MouseLeftButtonDown">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Image x:Name="titleImage"
+               Source="\Resources\esp1.png"
+               RenderOptions.BitmapScalingMode="HighQuality"
+               Grid.Row="0"
+               Grid.Column="0"
+               Grid.ColumnSpan="3"
+               Width="450">
+        </Image>
+
+        <TextBlock x:Name="versionNumberTextBlock"
+                   Grid.Column="2"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   Margin="0,0,10,0"
+                   Width="45"
+                   Height="25"
+                   Text="{Binding Source={x:Static local:AppContext.CurrentVersion}, StringFormat='ver {0}'}"
+                   Foreground="White">
+        </TextBlock>
+
+        <TextBox x:Name="searchBox" 
+                Grid.Column="0"
+                Grid.Row="1"
+                Grid.ColumnSpan="3"
+                Panel.ZIndex="2"
+                Margin="0,0,0,60"
+                Height="35"
+                Width="400"
+                Background="White"
+                FontFamily="Segoe UI" 
+                FontSize="16" 
+                FontWeight="DemiBold"
+                Foreground="Black"
+                HorizontalContentAlignment="Left"
+                VerticalContentAlignment="Center"
+                Padding="35,0,0,1"
+                Text="{Binding GameSearchVM.GameSearchEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                TextChanged="searchBox_TextChanged"
+                LostKeyboardFocus="searchBox_LostKeyboardFocus">
+
+
+            <TextBox.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+
+        <Image x:Name="searchBoxIcon"
+               Source="\Resources\searchIcon.png"
+               RenderOptions.BitmapScalingMode="HighQuality"
+               Grid.Row="1"
+               Grid.ColumnSpan="2"
+               Panel.ZIndex="2"
+               Margin="0,0,100,58"
+               Width="20"
+               Height="20">
+
+        </Image>
+
+        <ListBox x:Name="resultsListBox"
+                 Grid.Column="0"
+                 Grid.Row="1"
+                 Grid.ColumnSpan="3"
+                 Grid.RowSpan="3"
+                 Panel.ZIndex="1"
+                 Visibility="Hidden"
+                 Margin="0,0,0,121"
+                 Height="200"
+                 Width="375"
+                 FontSize="16"     
+                 ItemsSource="{Binding GameSearchVM.SearchResults}"
+                 SelectedItem="{Binding PresenceVM.SelectedGame, Mode=OneWayToSource}">
+
+            <ListBox.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </ListBox.Resources>
+        </ListBox>
+
+        <Button x:Name="optionsButton"
+               Grid.Column="1"
+               Grid.Row="1"
+               Margin="0,60,0,30"
+               Height="40"
+               Width="225"
+               Style="{StaticResource ButtonTemplate}"
+               Content="Settings" 
+               FontFamily="Segoe UI" 
+               FontSize="24" 
+               FontWeight="Bold" 
+               Click="optionsButton_Click">
+
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="BorderBrush" Value="DarkSlateGray"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <TextBlock x:Name="presenceStatus"
+                   Grid.Column="0"
+                   Grid.Row="1"
+                   Grid.ColumnSpan="3"
+                   Grid.RowSpan="2"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Padding="0,0,0,5"
+                   Foreground="White"
+                   Text="{Binding PresenceVM.Presence.ConnectionStatus}"
+                   FontSize="13">
+        </TextBlock>
+
+        <Border x:Name="discordRenderBackground" 
+               Background="#FF2F3136"
+               Grid.Column="0"
+               Grid.Row="2"
+               Grid.ColumnSpan="3"
+               Height="130"
+               Width="435"
+               CornerRadius="15,15,15,15">
+
+            <Canvas x:Name="discordRenderForeground"  
+               Background="#FF6C82CF"
+               Height="100"
+               Width="400">
+
+                <Border x:Name="discordRenderImage"
+                        HorizontalAlignment="Left"
+                        Margin="13,13,0,0"
+                        Height="74"
+                        Width="74"
+                        CornerRadius="10,10,10,10"
+                        RenderOptions.BitmapScalingMode="HighQuality">
+
+                    <Border.Background>
+                        <ImageBrush x:Name="discordRenderImageBrush" Stretch="Fill"
+                        ImageSource="{Binding PresenceVM.LocalSelectedGameAsset}"/>
+                    </Border.Background>
+                </Border>
+
+                <Border x:Name="discordRenderIconBorder"
+                        BorderThickness="1"
+                        Margin="64,64,0,0"
+                        BorderBrush="#FF6C82CF"
+                        Background="#FF6C82CF"
+                        Height="29.5"
+                        Width="29.5"
+                        CornerRadius="14"
+                        Visibility="{Binding PresenceVM.Presence.GameIsSelected, Converter={StaticResource BoolToVisibility}}">
+
+                    <Image x:Name="discordRenderIconImage"
+                        Source="\Resources\switchLogo.ico"
+                        Height="25"
+                        Width="25"
+                        RenderOptions.BitmapScalingMode="HighQuality"
+                        Visibility="{Binding PresenceVM.Presence.GameIsSelected, Converter={StaticResource BoolToVisibility}}">
+                    </Image>
+                </Border>
+
+                <TextBlock x:Name="discordRenderStatus"
+                          Text="The Nintendo Switch"
+                          Foreground="#FFFFFEFE"
+                          FontSize="14"
+                          FontWeight="Bold"
+                          Margin="105,30.5,0,0" 
+                          FontFamily="Segoe UI">
+                </TextBlock>
+
+                <TextBlock x:Name="discordRenderDetails"
+                          Foreground="#FFFFFEFE"
+                          FontSize="14"
+                          FontWeight="Normal"
+                          Margin="105,47.5,0,0"
+                          Text="{Binding PresenceVM.LocalPresenceDetails}">
+                </TextBlock>
+
+
+                <TextBlock x:Name="discordRenderTimestamp"
+                          Foreground="#FFFFFEFE"
+                          FontSize="14"
+                          FontWeight="Normal"
+                          Margin="105,57,0,0"
+                          Text="{Binding PresenceVM.LocalPresenceTimestamp, NotifyOnTargetUpdated=True}"
+                          TargetUpdated="discordRenderTimestamp_TargetUpdated"
+                          IsVisibleChanged="discordRenderTimestamp_IsVisibleChanged">
+
+                </TextBlock>
+            </Canvas>
+        </Border>
+
+        <Button x:Name="disableButton"
+               Grid.Column="0"
+               Grid.Row="3"
+               Grid.ColumnSpan="2"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Center"
+               Margin="0,5,0,0"
+               Height="45"
+               Width="250"
+               Style="{StaticResource ButtonTemplate}"
+               Content="Disable"
+               FontFamily="Segoe UI"
+               FontSize="26"
+               FontWeight="Bold"
+               DataContext="{Binding PresenceVM}"
+               Command="{Binding ExecuteDisablePresence}">
+
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="BorderBrush" Value="DarkSlateGray"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button x:Name="enableButton"
+               Grid.Column="1"
+               Grid.Row="3"
+               Grid.ColumnSpan="2"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Center"
+               Margin="0,5,0,0"
+               Height="45"
+               Width="250"
+               Style="{StaticResource ButtonTemplate}"
+               Content="Enable"
+               FontFamily="Segoe UI"
+               FontSize="26"
+               FontWeight="Bold"
+               DataContext="{Binding PresenceVM}"
+               Command="{Binding ExecuteEnablePresence}">
+
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="BorderBrush" Value="DarkSlateGray"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+    </Grid>
+</Window>
