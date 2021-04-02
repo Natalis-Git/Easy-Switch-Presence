@@ -1,5 +1,5 @@
 # Introduction
-"Easy Switch Presence is an application that lets users set a rich presence to Discord for Nintendo Switch. This app was built with convenience in mind- You do not have to take any special extra steps to get it up and running; All you need to do is boot up the app and pick a game. It also comes with a couple of settings to make things even simpler if you'd like.
+Easy Switch Presence is an application that lets users set a rich presence to Discord for Nintendo Switch. This app was built with convenience in mind- You do not have to take any special extra steps to get it up and running; All you need to do is boot up the app and pick a game. It also comes with a couple of settings to make things even simpler if you'd like.
 
 Other info: Due to the lack of any public API from Nintendo, this is a "fake" rich presence app in which the users manually pick out the game they wish to display. As of now, only select supported games can be displayed (Over 60 games, more coming soon), however, eventually an option will be added that lets the user enter their own game to display if it is not supported already. 
 
