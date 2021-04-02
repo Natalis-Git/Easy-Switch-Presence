@@ -327,7 +327,7 @@
 
   <ItemGroup>
     <None Update="config.ini">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="rpcAssets.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
