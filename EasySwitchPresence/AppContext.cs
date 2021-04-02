@@ -14,7 +14,7 @@ namespace EasySwitchPresence
     public static class AppContext
     {
         /// <summary>
-        /// The current version of Switch Presence.
+        /// The current version of Easy Switch Presence.
         /// </summary>
         public static readonly string CurrentVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
@@ -39,7 +39,7 @@ namespace EasySwitchPresence
         public static readonly string ResourcesFolderPath = Path.Combine(Path.GetDirectoryName(typeof(App).Assembly.Location), "Resources\\");
 
         /// <summary>
-        /// Config instance containing Switch Presence user settings
+        /// Config instance containing Easy Switch Presence user settings
         /// </summary>
         public static readonly Config Settings = new Config(ConfigFilePath);
 

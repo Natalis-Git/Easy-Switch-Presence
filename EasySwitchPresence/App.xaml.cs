@@ -20,7 +20,7 @@ namespace EasySwitchPresence.Startup
         private Forms.NotifyIcon _trayIcon;
         private MainWindow _window;
 
-        // TODO: Some more exception handling will need to be implemented for file reads (in the event that they are missing)
+
         private void OnAppStartup(object sender, StartupEventArgs e)
         {
             if (File.Exists(AppContext.LoggerFilePath))
@@ -28,17 +28,47 @@ namespace EasySwitchPresence.Startup
                 File.WriteAllText(AppContext.LoggerFilePath, String.Empty);
             }
 
-            this.DispatcherUnhandledException += (sender, e) => {
+            DispatcherUnhandledException += (sender, e) => {
                 UnhandledExceptionDump(e.Exception);
                 e.Handled = true;
             };
   
-            var presence = new RPCManager(new DiscordRpcClient("819326108196929576"));
 
-            List<Game> supportedGames = LoadRPCAssets();
+            RPCManager presence = null;
+
+            try
+            {
+                presence = new RPCManager(new DiscordRpcClient("819326108196929576"));
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("Discord client error - if this error persists, check for newer app version or report this to developer",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Warning
+                );
+
+                UnhandledExceptionDump(err);
+                Shutdown();
+            }
+
+
+            List<Game> supportedGames = null;
+
+            try
+            {
+                supportedGames = LoadRPCAssets();
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show("Startup error: Missing crucial file(s) - To recover, check/redownload latest release",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Warning
+                );
+
+                Shutdown();
+            }
+
 
             var mainViewModel = new MainViewModel();
-            mainViewModel.PresenceVM = new PresenceViewModel(presence, supportedGames, this.Dispatcher);
+            mainViewModel.PresenceVM = new PresenceViewModel(presence, supportedGames, Dispatcher);
             mainViewModel.GameSearchVM = new GameSearchViewModel(supportedGames);
 
             mainViewModel.PresenceVM.OnGameSelected = mainViewModel.GameSearchVM.ClearSearchEntry;

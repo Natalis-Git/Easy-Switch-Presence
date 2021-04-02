@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.IO;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using IniParser;
@@ -12,7 +13,7 @@ namespace EasySwitchPresence.Models
 {
     
     /// <summary>
-    /// Very basic class for containing Switch Presence settings
+    /// Very basic class for containing Easy Switch Presence settings
     /// <summary>
     public class Config : INotifyPropertyChanged
     {
@@ -151,12 +152,18 @@ namespace EasySwitchPresence.Models
         {
             _path = path;
 
+            if (!File.Exists(_path))
+            {
+                GenerateNewConfig();
+            }
+
             IniData data = new FileIniDataParser().ReadFile(_path);
 
             ShowElapsedTime     = Boolean.Parse(data["Settings"]["ShowElapsedTime"]);
             KeepSelectedGame    = Boolean.Parse(data["Settings"]["KeepSelectedGame"]);
             CloseToTray         = Boolean.Parse(data["Settings"]["CloseToTray"]);
             DisableAfterSetTime = Boolean.Parse(data["Settings"]["DisableAfterSetTime"]);
+            
 
             if (KeepSelectedGame == true)
             {
@@ -191,6 +198,24 @@ namespace EasySwitchPresence.Models
             data["Other"]["TimeToDisable"]      = TimeToDisable.ToString();
 
             parser.WriteFile("config.ini", data);
+        }
+
+
+        private void GenerateNewConfig()
+        {
+            var contents = new string[] {
+                "[Settings]",
+                "ShowElapsedTime = True",
+                "KeepSelectedGame = False",
+                "CloseToTray = False",
+                "DisableAfterSetTime = False",
+                "\n",
+                "[Other]",
+                "LastSelectedGame = ",
+                "TimeToDisable = 1"
+            };
+
+            File.WriteAllLines(_path, contents);        
         }
 
 
