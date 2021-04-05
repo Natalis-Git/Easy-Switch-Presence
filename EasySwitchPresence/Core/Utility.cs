@@ -11,11 +11,6 @@ namespace EasySwitchPresence
     /// <summary>
     /// Basic utility class for non-specific helper methods
     /// </summary>
-    /// <remarks>
-    /// The encode() and decode() methods are used for converting the list of available games and their respective keys
-    /// into a Base64 text format. This is a horrendous way to "encrypt" data, but it keeps your average user from
-    /// fiddling with the list, which is the goal
-    /// </remarks>
     public static class Utility
     {
         /// <summary>

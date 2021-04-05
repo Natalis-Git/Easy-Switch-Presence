@@ -81,6 +81,12 @@ namespace EasySwitchPresence.Models
             {
                 _disableAfterOneHour = value;
                 TimeToDisable = value ? 1 : TimeToDisable;
+
+                if (value == true)
+                {
+                    UpdateDisableTimeValues();
+                }
+
                 OnPropertyChanged();
             }
         }
@@ -93,6 +99,12 @@ namespace EasySwitchPresence.Models
             {
                 _disableAfterTwoHours = value;
                 TimeToDisable = value ? 2 : TimeToDisable;
+
+                if (value == true)
+                {
+                    UpdateDisableTimeValues();
+                }
+
                 OnPropertyChanged();
             }
         }
@@ -105,6 +117,12 @@ namespace EasySwitchPresence.Models
             {
                 _disableAfterFourHours = value;
                 TimeToDisable = value ? 4 : TimeToDisable;
+
+                if (value == true)
+                {
+                    UpdateDisableTimeValues();
+                }
+
                 OnPropertyChanged();
             }
         }
@@ -117,6 +135,12 @@ namespace EasySwitchPresence.Models
             {
                 _disableAfterEightHours = value;
                 TimeToDisable = value ? 8 : TimeToDisable;
+
+                if (value == true)
+                {
+                    UpdateDisableTimeValues();
+                }
+
                 OnPropertyChanged();
             }
         }
@@ -201,6 +225,41 @@ namespace EasySwitchPresence.Models
         }
 
 
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) 
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
+        // Manages mutual exclusivity between time settings. This is done here manually due to binding issues.
+        private void UpdateDisableTimeValues()
+        {
+            switch (TimeToDisable)
+            {
+                case 1:
+                    DisableAfterTwoHours = false;
+                    DisableAfterFourHours = false;
+                    DisableAfterEightHours = false;
+                    break;
+                case 2:
+                    DisableAfterOneHour = false;
+                    DisableAfterFourHours = false;
+                    DisableAfterEightHours = false;
+                    break;
+                case 4:
+                    DisableAfterOneHour = false;
+                    DisableAfterTwoHours = false;
+                    DisableAfterEightHours = false;
+                    break;
+                case 8:
+                    DisableAfterOneHour = false;
+                    DisableAfterTwoHours = false;
+                    DisableAfterFourHours = false;
+                    break;
+            }
+        }
+
+
         private void GenerateNewConfig()
         {
             var contents = new string[] {
@@ -216,12 +275,6 @@ namespace EasySwitchPresence.Models
             };
 
             File.WriteAllLines(_path, contents);        
-        }
-
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) 
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         
     }

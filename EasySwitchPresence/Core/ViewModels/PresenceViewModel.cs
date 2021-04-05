@@ -8,8 +8,6 @@ using System.Windows.Threading;
 using EasySwitchPresence.Models;
 
 
-// NOTE: At the moment, the use of a Dispatcher as well as Windows.Media.Imaging makes this viewmodel Windows-dependent.
-// In future, adjustments may need to be made for their removal/replacement, allowing for full platform independence.
 
 
 namespace EasySwitchPresence.ViewModels
@@ -100,10 +98,14 @@ namespace EasySwitchPresence.ViewModels
         private string _localPresenceDetails;
         private string _presenceTimestamp;
 
-        private DispatchCounter _counter; // Counter to track local presence elapsed time
-        private Dispatcher _dispatcher; // Reference to UI Dispatcher to allow for invocation on UI thread
+        // Counter to track local presence elapsed time
+        private DispatchCounter _counter;
+
+        // Reference to UI Dispatcher to allow for invocation on UI thread
+        private Dispatcher _dispatcher;
     
-        private Stopwatch _stopwatch = new Stopwatch(); // Stopwatch for tracking time seperately from Presence and DispatchTimer
+        // Stopwatch for tracking time seperately from Presence and DispatchTimer
+        private Stopwatch _stopwatch = new Stopwatch(); 
 
 
         public PresenceViewModel(RPCManager presence, List<Game> games, Dispatcher dispatcher)

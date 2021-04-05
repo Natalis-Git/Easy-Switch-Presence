@@ -57,12 +57,13 @@ namespace EasySwitchPresence.Startup
             {
                 supportedGames = LoadRPCAssets();
             }
-            catch (FileNotFoundException)
+            catch (FileNotFoundException err)
             {
                 MessageBox.Show("Startup error: Missing crucial file(s) - To recover, check/redownload latest release",
                     "Error", MessageBoxButton.OK, MessageBoxImage.Warning
                 );
 
+                UnhandledExceptionDump(err);
                 Shutdown();
             }
 
@@ -80,8 +81,7 @@ namespace EasySwitchPresence.Startup
             _trayIcon = LoadTrayIcon();
             _trayIcon.Visible = true;
             
-            _window.Show();
-            
+            _window.Show();   
         }
 
 
@@ -130,8 +130,8 @@ namespace EasySwitchPresence.Startup
 
         private List<Game> LoadRPCAssets()
         {
-            // The Supported games and their respective asset keys (once decoded) are in a simple
-            // key-value pair format which is handled by the Models.Game constructor. 
+            // Supported games & their respective rpc asset keys (once decoded) are in a simple key-value pair format which
+            // is handled by the Models.Game constructor. Currently, only the project owner has access to the encoded file.
             string contents = Utility.Decode(File.ReadAllText(AppContext.AssetFilePath));
             string[] temp = contents.Split('\n');
 

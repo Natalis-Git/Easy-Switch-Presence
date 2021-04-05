@@ -7,9 +7,14 @@
     
     <Application.Resources>
 
+        <!-- Boolean converter for setting window visibility. -->
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
 
-        
+        <!-- Boolean converter for Radio Buttons to prevent binding issues. Prevents WPF from setting its own values. -->
+        <local:BoolConverter x:Key="BoolConverter" />
+        <local:BoolConverter x:Key="InverseBoolConverter" Inverse="True"/>
+
+        <!-- Template for primary button design on main window -->
         <Style TargetType="{x:Type Button}" x:Key="ButtonTemplate">
             <Setter Property="Background" Value="White"/>
             <Setter Property="Foreground" Value="#e4000f"/>

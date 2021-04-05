@@ -18,7 +18,7 @@ namespace EasySwitchPresence.Models
 
 
         /// <summary>
-        /// Ctor; To be provided with a formatted line from the list of supported games.
+        /// Ctor; To be provided with a formatted line from the list of supported games decoded from rpcAssets.dat
         /// </summary>
         public Game(string line)
         {

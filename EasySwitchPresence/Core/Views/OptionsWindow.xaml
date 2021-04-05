@@ -124,51 +124,46 @@
                 </CheckBox.LayoutTransform>
             </CheckBox>
 
-            <!-- FIXME: Radio buttons or their value bindings seem to break upon closing and reopening options window more than once. 
-                        Upon opening, values are lost, and upon more openings, the buttons completely stop functioning.
-                        Binding issue perhaps? Possibly related to closing and reinstantiation of options window...
-            
-                        Addendum: In relation to the amount of closings and reopenings, bug seems to be inconsistant. May take several
-                        tries to recreate the issue. Release build also seems less likely for this bug to occur (coincidence probably?) -->   
+  
             <RadioButton x:Name="optionOneRadioButton" 
-                     GroupName="TimeToDisable"
+                     GroupName="TimeToDisable1"
                      Grid.Row="6"
                      Grid.ColumnSpan="2"
                      Margin="80,0,0,0"
                      Content="1 Hour"
                      Foreground="white"
-                     IsChecked="{Binding DisableAfterOneHour, Source={x:Static local:AppContext.Settings}}">
+                     IsChecked="{Binding DisableAfterOneHour, Source={x:Static local:AppContext.Settings}, Converter={StaticResource BoolConverter}}">
             </RadioButton>
 
             <RadioButton x:Name="optionTwoRadioButton" 
-                     GroupName="TimeToDisable"
+                     GroupName="TimeToDisable2"
                      Grid.Row="7"
                      Grid.ColumnSpan="2"
                      Margin="80,0,0,0"
                      Content="2 Hours"
                      Foreground="white"
-                     IsChecked="{Binding DisableAfterTwoHours, Source={x:Static local:AppContext.Settings}}">
+                     IsChecked="{Binding DisableAfterTwoHours, Source={x:Static local:AppContext.Settings}, Converter={StaticResource BoolConverter}}">
             </RadioButton>
 
 
             <RadioButton x:Name="optionThreeRadioButton" 
-                     GroupName="TimeToDisable"
+                     GroupName="TimeToDisable3"
                      Grid.Row="8"
                      Grid.ColumnSpan="2"
                      Margin="80,0,0,0"
                      Content="4 Hours"
                      Foreground="white"
-                     IsChecked="{Binding DisableAfterFourHours, Source={x:Static local:AppContext.Settings}}">
+                     IsChecked="{Binding DisableAfterFourHours, Source={x:Static local:AppContext.Settings}, Converter={StaticResource BoolConverter}}">
             </RadioButton>
 
             <RadioButton x:Name="optionFourRadioButton" 
-                     GroupName="TimeToDisable"
+                     GroupName="TimeToDisable4"
                      Grid.Row="9"
                      Grid.ColumnSpan="2"
                      Margin="80,0,0,0"
                      Content="8 Hours"
                      Foreground="white"
-                     IsChecked="{Binding DisableAfterEightHours, Source={x:Static local:AppContext.Settings}}">
+                     IsChecked="{Binding DisableAfterEightHours, Source={x:Static local:AppContext.Settings}, Converter={StaticResource BoolConverter}}">
             </RadioButton>
 
             <Button x:Name="closeButton"
