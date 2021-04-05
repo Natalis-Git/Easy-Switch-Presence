@@ -1,3 +1,9 @@
+<p align="center">
+  <img align="center" src="EasySwitchPresence/Resources/spLogo.ico" width="100" alt="logo">
+  <h1 align="center">Easy Switch Presence</h1>
+  <h4 align="center">A quick and easy way to set a presence to Discord for your Switch games</h4>
+</p>
+
 # Introduction
 Easy Switch Presence is an application that lets users set a rich presence to Discord for Nintendo Switch. This app was built with convenience in mind- You do not have to take any special extra steps to get it up and running; All you need to do is boot up the app and pick a game. It also comes with a couple of settings to make things even simpler if you'd like.
 
