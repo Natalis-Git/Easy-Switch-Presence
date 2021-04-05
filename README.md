@@ -8,9 +8,12 @@
 # Introduction
 Easy Switch Presence is an application that lets users set a rich presence to Discord for Nintendo Switch. This app was built with convenience in mind- You do not have to take any special extra steps to get it up and running; All you need to do is boot up the app and pick a game. It also comes with a couple of settings to make things even simpler if you'd like.
 
+[![esp.png](https://i.postimg.cc/433bxRcb/esp.png)](https://postimg.cc/CRWfctmz)
+
 Due to the lack of any public API from Nintendo, this is a "fake" rich presence app in which the users manually pick out the game they wish to display. As of now, only select supported games can be displayed (Over 60 games, more coming soon), however, eventually an option will be added that lets the user enter their own game to display if it is not supported already. 
 
-Note: This app is only available on Windows for the forseeable future. That said, if enough people request it, this could change.
+**Note:** This app is only available on Windows for the forseeable future. That said, if enough people request it, this could change.
+
 
 # Installation
 For those looking to download and use the app, download the latest release version [here](https://github.com/Natalis-Git/Easy-Switch-Presence/releases/)
