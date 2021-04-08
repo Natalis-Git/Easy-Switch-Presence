@@ -32,7 +32,7 @@ namespace EasySwitchPresence.ViewModels
                 
                 if (value != null)
                 {
-                    OnGameSelected();
+                    OnGameSelected?.Invoke();
                 }   
             }
         }

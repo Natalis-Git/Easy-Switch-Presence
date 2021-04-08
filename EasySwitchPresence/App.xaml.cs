@@ -69,9 +69,22 @@ namespace EasySwitchPresence.Startup
 
 
             var mainViewModel = new MainViewModel();
-            mainViewModel.PresenceVM = new PresenceViewModel(presence, supportedGames, Dispatcher);
-            mainViewModel.GameSearchVM = new GameSearchViewModel(supportedGames);
 
+            try 
+            {
+                mainViewModel.PresenceVM = new PresenceViewModel(presence, supportedGames, Dispatcher);
+                mainViewModel.GameSearchVM = new GameSearchViewModel(supportedGames);
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("Startup error - if this error persists, check for newer app version or report this to developer",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Warning
+                );
+
+                UnhandledExceptionDump(err);
+                Shutdown();
+            }
+            
             mainViewModel.PresenceVM.OnGameSelected = mainViewModel.GameSearchVM.ClearSearchEntry;
 
             _window = new MainWindow();
