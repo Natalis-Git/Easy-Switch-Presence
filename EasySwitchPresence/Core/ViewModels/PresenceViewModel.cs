@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using EasySwitchPresence.Models;
+using EasySwitchPresence.Web;
 
 
 
@@ -13,7 +14,7 @@ using EasySwitchPresence.Models;
 namespace EasySwitchPresence.ViewModels
 {
 
-    public class PresenceViewModel : ViewModelBase
+    public class PresenceViewModel : NotifyBase
     {
         /// <summary>
         /// The title selected by the user. Acts as a liason for the Presence.CurrentGame property,
@@ -114,7 +115,7 @@ namespace EasySwitchPresence.ViewModels
             Games = games;
 
             LocalSelectedGameAsset = new BitmapImage(
-                new Uri(AppContext.ResourcesFolderPath + Presence.AssetKeyDefault + ".jpg")
+                new Uri(AppContext.ResourcesFolderPath + AppClient.DefaultAssetKey + ".jpg")
             );
 
             _dispatcher = dispatcher;
@@ -200,7 +201,7 @@ namespace EasySwitchPresence.ViewModels
             if (Presence.CurrentGame == null)
             {
                 LocalSelectedGameAsset = new BitmapImage(
-                    new Uri(AppContext.ResourcesFolderPath + Presence.AssetKeyDefault + ".jpg")
+                    new Uri(AppContext.ResourcesFolderPath + AppClient.DefaultAssetKey + ".jpg")
                 );
             }
             else

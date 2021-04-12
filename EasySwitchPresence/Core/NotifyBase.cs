@@ -5,10 +5,10 @@ using System.Runtime.CompilerServices;
 
 
 
-namespace EasySwitchPresence.ViewModels
+namespace EasySwitchPresence
 {
 
-    public abstract class ViewModelBase : INotifyPropertyChanged
+    public abstract class NotifyBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -145,7 +145,7 @@ namespace EasySwitchPresence.Startup
         {
             // Supported games & their respective rpc asset keys (once decoded) are in a simple key-value pair format which
             // is handled by the Models.Game constructor. Currently, only the project owner has access to the encoded file.
-            string contents = Utility.Decode(File.ReadAllText(AppContext.AssetFilePath));
+            string contents = Utility.Decode64(File.ReadAllText(AppContext.AssetFilePath));
             string[] temp = contents.Split('\n');
 
             var gameList = new List<Game>();

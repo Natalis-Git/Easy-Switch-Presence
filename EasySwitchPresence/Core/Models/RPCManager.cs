@@ -1,8 +1,7 @@
 ﻿
 using System;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.ComponentModel;
+using EasySwitchPresence.Web;
 using DiscordRPC;
 using DiscordRPC.Logging;
 
@@ -14,7 +13,7 @@ namespace EasySwitchPresence.Models
     /// <summary>
     /// Rich Presence instance manager; Essentially a wrapper for DiscordRpcClient
     /// </summary>
-    public class RPCManager : INotifyPropertyChanged
+    public class RPCManager : NotifyBase
     {      
         /// <summary>
         /// Gets or sets the current game to be displayed by Rich Presence. Refreshes automatically.
@@ -88,17 +87,9 @@ namespace EasySwitchPresence.Models
         public string DetailsDefault { get; set; } = "Menus - Idle";
 
         /// <summary>
-        /// The default rich presence asset key for when no game is selected
-        /// </summary>
-        public string AssetKeyDefault { get; set; } = "spa_000";
-
-
-        /// <summary>
         /// Fires whenever connection to discord is established or lost
         /// </summary>
         public event EventHandler ConnectionChanged;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
 
         private Game _currentGame;
@@ -141,7 +132,7 @@ namespace EasySwitchPresence.Models
                 _client.SetPresence(new RichPresence() {
                     Details = DetailsDefault,
                     Assets = new Assets() {
-                        LargeImageKey = AssetKeyDefault,
+                        LargeImageKey = AppClient.DefaultAssetKey,
                         LargeImageText = "Idle"
                     }
                });
@@ -155,16 +146,10 @@ namespace EasySwitchPresence.Models
                 Assets = new Assets() {
                     LargeImageKey = CurrentGame.AssetKey,
                     LargeImageText = $"Playing {CurrentGame.Title}",
-                    SmallImageKey = AssetKeyDefault,
+                    SmallImageKey = AppClient.DefaultAssetKey,
                     SmallImageText = "Nintendo Switch"
                 }
             });
-        }
-
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) 
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
 
