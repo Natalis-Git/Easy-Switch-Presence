@@ -6,7 +6,8 @@ using System.Text.Json;
 using System.Threading.Tasks;
 
 
-// TODO: Exception handling still needs to be implemented here.
+// TODO: Usage of this client has yet to be implemented.
+// TODO: Exception handling still needs to be implemented here as well.
 
 
 namespace EasySwitchPresence.Web
@@ -46,7 +47,7 @@ namespace EasySwitchPresence.Web
 
 
         /// <summary>
-        /// Retrieves asset from discord.
+        /// Retrieves asset from discord using provided key.
         /// </summary>
         public static async Task<byte[]> GetAssetAsync(string key)
         {
