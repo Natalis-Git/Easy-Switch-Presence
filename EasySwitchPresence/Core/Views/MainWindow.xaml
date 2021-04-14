@@ -171,7 +171,7 @@
 
                     <Border.Background>
                         <ImageBrush x:Name="discordRenderImageBrush" Stretch="Fill"
-                        ImageSource="{Binding PresenceVM.Assets.CurrentAsset}"/>
+                        ImageSource="{Binding PresenceVM.LocalSelectedGameAsset}"/>
                     </Border.Background>
                 </Border>
 

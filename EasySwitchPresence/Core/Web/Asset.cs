@@ -15,9 +15,9 @@ namespace EasySwitchPresence.Web
     /// </summary>
     public class Asset
     {
-        public string id { get; }
-        public int type { get; }
-        public string name { get; }
+        public string id { get; set; }
+        public int type { get; set; }
+        public string name {get; set; }
     }
 
 }

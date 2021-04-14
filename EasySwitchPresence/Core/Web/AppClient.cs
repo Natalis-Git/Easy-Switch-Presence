@@ -19,15 +19,15 @@ namespace EasySwitchPresence.Web
     public static class AppClient
     {
         /// <summary>
-        /// Key to default Switch logo asset for use by large or small icon in RPC
+        /// Key to default Switch logo asset for use by RPC large or small icon
         /// </summary>
-        public static string DefaultAssetKey { get; }
+        public static string DefaultAssetKey { get; } = "spa_000";
 
 
         private static readonly HttpClient _client = new HttpClient();
 
         private static readonly string _assetDataUri = "https://discord.com/api/v8/oauth2/applications/819326108196929576/assets";
-        private static readonly string _assetStorageUri = "https://cdn.discordapp.com/app-assets/819326108196929576";
+        private static readonly string _assetStorageUri = "https://cdn.discordapp.com/app-assets/819326108196929576/";
 
         private static List<Asset> _assets = null;
 
@@ -53,7 +53,7 @@ namespace EasySwitchPresence.Web
         {
             var asset = _assets.Find(asset => asset.name == key);
 
-            HttpResponseMessage response = await _client.GetAsync(_assetDataUri + '/' + asset.id + ".png");
+            HttpResponseMessage response = await _client.GetAsync(_assetStorageUri + asset.id + ".png");
             response.EnsureSuccessStatusCode();
 
             return await response.Content.ReadAsByteArrayAsync();

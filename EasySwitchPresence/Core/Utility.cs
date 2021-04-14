@@ -46,6 +46,7 @@ namespace EasySwitchPresence
 
             image.BeginInit();
             image.StreamSource = stream;
+            image.CacheOption = BitmapCacheOption.OnLoad;
             image.EndInit();
 
             if (image.CanFreeze)

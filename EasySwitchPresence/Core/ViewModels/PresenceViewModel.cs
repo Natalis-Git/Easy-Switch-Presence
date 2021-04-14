@@ -193,7 +193,7 @@ namespace EasySwitchPresence.ViewModels
         }
 
 
-        private void OnSelectGame()
+        private async void OnSelectGame()
         {
             Presence.CurrentGame = SelectedGame != null ? Games.Find(game => game.Title == SelectedGame) : null;
             LocalPresenceDetails = Presence.CurrentGame?.Title;
@@ -206,7 +206,9 @@ namespace EasySwitchPresence.ViewModels
             }
             else
             {
-                LocalSelectedGameAsset = new BitmapImage(new Uri(Presence.CurrentGame.LocalAssetPath));
+                var asset = await AppClient.GetAssetAsync(Presence.CurrentGame.AssetKey);       
+                LocalSelectedGameAsset = Utility.ConvertToBitmapImage(asset);
+
                 LocalPresenceTimestamp = AppContext.Settings.ShowElapsedTime ? "00:00 elapsed" : String.Empty;
 
                 if (Presence.Enabled == true)

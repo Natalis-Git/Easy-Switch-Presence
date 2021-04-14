@@ -7,6 +7,7 @@ using DiscordRPC;
 using EasySwitchPresence.Models;
 using EasySwitchPresence.ViewModels;
 using EasySwitchPresence.Views;
+using EasySwitchPresence.Web;
 
 using Forms = System.Windows.Forms; // Alias to prevent naming collisions with System.Windows
 
@@ -55,6 +56,7 @@ namespace EasySwitchPresence.Startup
 
             try
             {
+                AppClient.LoadAssetDataAsync();
                 supportedGames = LoadRPCAssets();
             }
             catch (FileNotFoundException err)
@@ -163,6 +165,7 @@ namespace EasySwitchPresence.Startup
         {
             using StreamWriter stream = new StreamWriter(AppContext.LoggerFilePath, true);
             
+            stream.WriteLine('\n');
             stream.WriteLine($"--- Error: {unhandled.ToString()} ---");
             stream.WriteLine($"{unhandled.Message}");
             stream.WriteLine($"{unhandled.StackTrace}");
