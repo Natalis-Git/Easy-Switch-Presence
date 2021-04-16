@@ -1,8 +1,6 @@
 ﻿
 using System;
 using System.IO;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using IniParser;
 using IniParser.Model;
 
@@ -15,7 +13,7 @@ namespace EasySwitchPresence.Models
     /// <summary>
     /// Very basic class for containing Easy Switch Presence settings
     /// <summary>
-    public class Config : INotifyPropertyChanged
+    public class Config : NotifyBase
     {
         /// <summary>
         /// Whether or not Rich Presence will show time elapsed for a displayed game
@@ -156,9 +154,6 @@ namespace EasySwitchPresence.Models
         public string LastSelectedGame { get; set; }
 
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-
         private bool _showElapsedTime;
         private bool _keepSelectedGame;
         private bool _closeToTray;
@@ -222,12 +217,6 @@ namespace EasySwitchPresence.Models
             data["Other"]["TimeToDisable"]      = TimeToDisable.ToString();
 
             parser.WriteFile("config.ini", data);
-        }
-
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) 
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
 

@@ -1,8 +1,7 @@
 ﻿
 using System;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.ComponentModel;
+using EasySwitchPresence.Web;
 using DiscordRPC;
 using DiscordRPC.Logging;
 
@@ -14,7 +13,7 @@ namespace EasySwitchPresence.Models
     /// <summary>
     /// Rich Presence instance manager; Essentially a wrapper for DiscordRpcClient
     /// </summary>
-    public class RPCManager : INotifyPropertyChanged
+    public class RPCManager : NotifyBase
     {      
         /// <summary>
         /// Gets or sets the current game to be displayed by Rich Presence. Refreshes automatically.
@@ -88,17 +87,14 @@ namespace EasySwitchPresence.Models
         public string DetailsDefault { get; set; } = "Menus - Idle";
 
         /// <summary>
-        /// The default rich presence asset key for when no game is selected
+        /// Key to default Switch logo asset for use by RPC large or small icon
         /// </summary>
-        public string AssetKeyDefault { get; set; } = "spa_000";
-
+        public const string DefaultAssetKey = "spa_000";
 
         /// <summary>
         /// Fires whenever connection to discord is established or lost
         /// </summary>
         public event EventHandler ConnectionChanged;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
 
         private Game _currentGame;
@@ -141,7 +137,7 @@ namespace EasySwitchPresence.Models
                 _client.SetPresence(new RichPresence() {
                     Details = DetailsDefault,
                     Assets = new Assets() {
-                        LargeImageKey = AssetKeyDefault,
+                        LargeImageKey = DefaultAssetKey,
                         LargeImageText = "Idle"
                     }
                });
@@ -155,16 +151,10 @@ namespace EasySwitchPresence.Models
                 Assets = new Assets() {
                     LargeImageKey = CurrentGame.AssetKey,
                     LargeImageText = $"Playing {CurrentGame.Title}",
-                    SmallImageKey = AssetKeyDefault,
+                    SmallImageKey = DefaultAssetKey,
                     SmallImageText = "Nintendo Switch"
                 }
             });
-        }
-
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) 
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
 
@@ -180,15 +170,13 @@ namespace EasySwitchPresence.Models
             Enabled = false;
             OnConnectionChanged();
 
-            using StreamWriter stream = new StreamWriter(AppContext.LoggerFilePath, true);
-            stream.WriteLine($"User ready - {msg.User.Username}");
+            Logger.LogMessage($"User ready - {msg.User.Username}");
         }
 
 
         private void OnPresenceUpdate(object sender, DiscordRPC.Message.PresenceMessage msg)
         {
-            using StreamWriter stream = new StreamWriter(AppContext.LoggerFilePath, true);
-            stream.WriteLine($"Recieved Presence Update - {msg.Presence.Details}");
+            Logger.LogMessage($"Recieved Presence Update - {msg.Presence.Details}");
         }
 
 
@@ -198,15 +186,13 @@ namespace EasySwitchPresence.Models
             ConnectionStatus = "Unable to connect to Discord. Retrying...";
             OnConnectionChanged();
 
-            using StreamWriter stream = new StreamWriter(AppContext.LoggerFilePath, true);
-            stream.WriteLine("ERROR - Failed to connect to Discord");
+            Logger.LogMessage("ERROR - Failed to connect to Discord");
         }
 
 
         private void OnError(object sender, DiscordRPC.Message.ErrorMessage msg)
         {
-            using StreamWriter stream = new StreamWriter(AppContext.LoggerFilePath, true);
-            stream.WriteLine($"ERROR - {msg.Message}");
+            Logger.LogMessage($"ERROR - {msg.Message}");
         }
     }
 

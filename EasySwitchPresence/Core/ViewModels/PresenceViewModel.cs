@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using EasySwitchPresence.Models;
+using EasySwitchPresence.Web;
 
 
 
@@ -13,7 +14,7 @@ using EasySwitchPresence.Models;
 namespace EasySwitchPresence.ViewModels
 {
 
-    public class PresenceViewModel : ViewModelBase
+    public class PresenceViewModel : NotifyBase
     {
         /// <summary>
         /// The title selected by the user. Acts as a liason for the Presence.CurrentGame property,
@@ -114,7 +115,7 @@ namespace EasySwitchPresence.ViewModels
             Games = games;
 
             LocalSelectedGameAsset = new BitmapImage(
-                new Uri(AppContext.ResourcesFolderPath + Presence.AssetKeyDefault + ".jpg")
+                new Uri(AppContext.ResourcesFolderPath + RPCManager.DefaultAssetKey + ".jpg")
             );
 
             _dispatcher = dispatcher;
@@ -192,7 +193,7 @@ namespace EasySwitchPresence.ViewModels
         }
 
 
-        private void OnSelectGame()
+        private async void OnSelectGame()
         {
             Presence.CurrentGame = SelectedGame != null ? Games.Find(game => game.Title == SelectedGame) : null;
             LocalPresenceDetails = Presence.CurrentGame?.Title;
@@ -200,12 +201,14 @@ namespace EasySwitchPresence.ViewModels
             if (Presence.CurrentGame == null)
             {
                 LocalSelectedGameAsset = new BitmapImage(
-                    new Uri(AppContext.ResourcesFolderPath + Presence.AssetKeyDefault + ".jpg")
+                    new Uri(AppContext.ResourcesFolderPath + RPCManager.DefaultAssetKey + ".jpg")
                 );
             }
             else
             {
-                LocalSelectedGameAsset = new BitmapImage(new Uri(Presence.CurrentGame.LocalAssetPath));
+                var asset = await AppClient.GetAssetAsync(Presence.CurrentGame.AssetKey);       
+                LocalSelectedGameAsset = Utility.ConvertToBitmapImage(asset);
+
                 LocalPresenceTimestamp = AppContext.Settings.ShowElapsedTime ? "00:00 elapsed" : String.Empty;
 
                 if (Presence.Enabled == true)
@@ -221,7 +224,7 @@ namespace EasySwitchPresence.ViewModels
         // NOTE: Despite invoking this method on the UI thread, there seems to still be an issue with 
         // the rate as which the bound UI timestamp element updates (usually skipping seconds, but staying in sync with time).
         // In the future this should probably be looked into, but for now it is a minor problem that usually 
-        // goes away after a few dozen seconds.
+        // goes away after a couple dozen seconds.
         private void OnCounterSecondElapsed(object sender, EventArgs e)
         {
             if (AppContext.Settings.ShowElapsedTime == true && Presence.CurrentGame != null)

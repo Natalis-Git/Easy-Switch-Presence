@@ -9,7 +9,7 @@ using EasySwitchPresence.Models;
 namespace EasySwitchPresence.ViewModels
 {
 
-    public class GameSearchViewModel : ViewModelBase
+    public class GameSearchViewModel : NotifyBase
     {
         /// <summary>
         /// The game to be searched for as inputted by the user
