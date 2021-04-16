@@ -14,7 +14,6 @@ namespace EasySwitchPresence.Models
     {
         public string Title { get; }
         public string AssetKey { get; }
-        public string LocalAssetPath { get; }
 
 
         /// <summary>
@@ -26,8 +25,6 @@ namespace EasySwitchPresence.Models
             
             Title = temp[0].Trim('\"');
             AssetKey = temp[1].Trim('\"');
-
-            LocalAssetPath = AppContext.ResourcesFolderPath + AssetKey + ".jpg";
         }
     }
 

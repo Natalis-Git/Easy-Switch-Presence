@@ -7,7 +7,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 
 
-// TODO: Exception handling still needs to be implemented here as well.
 
 
 namespace EasySwitchPresence.Web
@@ -39,12 +38,11 @@ namespace EasySwitchPresence.Web
             }
             catch (HttpRequestException err)
             {
-                Utility.WriteToFile(AppContext.LoggerFilePath, "AppClient HTTP request error - failed to retrieve asset list");
-                Utility.WriteToFile(AppContext.LoggerFilePath, $"{err.Message}");
+                Logger.LogException("AppClient HTTP request error - failed to retrieve asset list", err);
             }
             catch (IOException err)
             {
-                Utility.WriteToFile(AppContext.LoggerFilePath, $"\nAppClient IO error - {err.Message}");
+                Logger.LogException("AppClient IO error", err);
             }
 
             try
@@ -53,8 +51,7 @@ namespace EasySwitchPresence.Web
             }
             catch (HttpRequestException err)
             {
-                Utility.WriteToFile(AppContext.LoggerFilePath, "\nAppClient HTTP request error - failed to retrieve asset data");
-                Utility.WriteToFile(AppContext.LoggerFilePath, $"{err.Message}");
+                Logger.LogException("AppClient HTTP request error - failed to retrieve asset data", err);
             }
         }
 

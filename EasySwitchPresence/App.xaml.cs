@@ -30,7 +30,7 @@ namespace EasySwitchPresence.Startup
             }
 
             DispatcherUnhandledException += (sender, e) => {
-                UnhandledExceptionDump(e.Exception);
+                Logger.UnhandledExceptionDump(e.Exception);
                 e.Handled = true;
             };
 
@@ -40,11 +40,11 @@ namespace EasySwitchPresence.Startup
             }
             catch (Exception err)
             {
-                MessageBox.Show("App client startup error - if this error persists, check for newer app version or report this to developer",
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Warning
+                MessageBox.Show("Startup error - failed to connect: Please check your internet connection and try again.",
+                    "Easy Switch Presence - Error", MessageBoxButton.OK, MessageBoxImage.Warning
                 );
 
-                UnhandledExceptionDump(err);
+                Logger.UnhandledExceptionDump(err);
                 Shutdown();
             }
   
@@ -58,10 +58,10 @@ namespace EasySwitchPresence.Startup
             catch (Exception err)
             {
                 MessageBox.Show("Discord client error - if this error persists, check for newer app version or report this to developer",
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Warning
+                    "Easy Switch Presence - Error", MessageBoxButton.OK, MessageBoxImage.Warning
                 );
 
-                UnhandledExceptionDump(err);
+                Logger.UnhandledExceptionDump(err);
                 Shutdown();
             }
 
@@ -75,10 +75,10 @@ namespace EasySwitchPresence.Startup
             catch (FileNotFoundException err)
             {
                 MessageBox.Show("Startup error: Missing crucial file(s) - To recover, check/redownload latest release",
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Warning
+                    "Easy Switch Presence - Error", MessageBoxButton.OK, MessageBoxImage.Warning
                 );
 
-                UnhandledExceptionDump(err);
+                Logger.UnhandledExceptionDump(err);
                 Shutdown();
             }
 
@@ -93,10 +93,10 @@ namespace EasySwitchPresence.Startup
             catch (Exception err)
             {
                 MessageBox.Show("Startup error - if this error persists, check for newer app version or report this to developer",
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Warning
+                    "Easy Switch Presence - Error", MessageBoxButton.OK, MessageBoxImage.Warning
                 );
 
-                UnhandledExceptionDump(err);
+                Logger.UnhandledExceptionDump(err);
                 Shutdown();
             }
             
@@ -171,18 +171,6 @@ namespace EasySwitchPresence.Startup
             }
 
             return gameList;
-        }
-
-
-        private void UnhandledExceptionDump(Exception unhandled)
-        {
-            using StreamWriter stream = new StreamWriter(AppContext.LoggerFilePath, true);
-            
-            stream.WriteLine('\n');
-            stream.WriteLine($"--- Error: {unhandled.ToString()} ---");
-            stream.WriteLine($"{unhandled.Message}");
-            stream.WriteLine($"{unhandled.StackTrace}");
-            stream.WriteLine("---- End Exception ----");
         }
     }
 

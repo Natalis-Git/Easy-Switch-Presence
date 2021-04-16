@@ -170,15 +170,13 @@ namespace EasySwitchPresence.Models
             Enabled = false;
             OnConnectionChanged();
 
-            using StreamWriter stream = new StreamWriter(AppContext.LoggerFilePath, true);
-            stream.WriteLine($"User ready - {msg.User.Username}");
+            Logger.LogMessage($"User ready - {msg.User.Username}");
         }
 
 
         private void OnPresenceUpdate(object sender, DiscordRPC.Message.PresenceMessage msg)
         {
-            using StreamWriter stream = new StreamWriter(AppContext.LoggerFilePath, true);
-            stream.WriteLine($"Recieved Presence Update - {msg.Presence.Details}");
+            Logger.LogMessage($"Recieved Presence Update - {msg.Presence.Details}");
         }
 
 
@@ -188,15 +186,13 @@ namespace EasySwitchPresence.Models
             ConnectionStatus = "Unable to connect to Discord. Retrying...";
             OnConnectionChanged();
 
-            using StreamWriter stream = new StreamWriter(AppContext.LoggerFilePath, true);
-            stream.WriteLine("ERROR - Failed to connect to Discord");
+            Logger.LogMessage("ERROR - Failed to connect to Discord");
         }
 
 
         private void OnError(object sender, DiscordRPC.Message.ErrorMessage msg)
         {
-            using StreamWriter stream = new StreamWriter(AppContext.LoggerFilePath, true);
-            stream.WriteLine($"ERROR - {msg.Message}");
+            Logger.LogMessage($"ERROR - {msg.Message}");
         }
     }
 
