@@ -1,8 +1,6 @@
 ﻿
 using System;
 using System.IO;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using IniParser;
 using IniParser.Model;
 

@@ -36,6 +36,26 @@ namespace EasySwitchPresence
 
 
         /// <summary>
+        /// Writes the provided string to file at provided path
+        /// </summary>
+        public static void WriteToFile(string path, string contents)
+        {
+            using var stream = new StreamWriter(path, true);
+            stream.WriteLine($"\n{contents}");
+        }
+
+
+        /// <summary>
+        /// Reads all content from file at provided path
+        /// </summary>
+        public static string ReadFromFile(string path)
+        {
+            using var stream = new StreamReader(path);
+            return stream.ReadToEnd();
+        }
+
+
+        /// <summary>
         /// Converts a byte array into a Windows.Media.Imaging.BitmapImage.
         /// </summary>
         public static BitmapImage ConvertToBitmapImage(byte[] bytes)

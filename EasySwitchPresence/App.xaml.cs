@@ -33,6 +33,20 @@ namespace EasySwitchPresence.Startup
                 UnhandledExceptionDump(e.Exception);
                 e.Handled = true;
             };
+
+            try
+            {
+                AppClient.Startup();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("App client startup error - if this error persists, check for newer app version or report this to developer",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Warning
+                );
+
+                UnhandledExceptionDump(err);
+                Shutdown();
+            }
   
 
             RPCManager presence = null;
@@ -56,7 +70,6 @@ namespace EasySwitchPresence.Startup
 
             try
             {
-                AppClient.LoadAssetDataAsync();
                 supportedGames = LoadRPCAssets();
             }
             catch (FileNotFoundException err)

@@ -115,7 +115,7 @@ namespace EasySwitchPresence.ViewModels
             Games = games;
 
             LocalSelectedGameAsset = new BitmapImage(
-                new Uri(AppContext.ResourcesFolderPath + AppClient.DefaultAssetKey + ".jpg")
+                new Uri(AppContext.ResourcesFolderPath + RPCManager.DefaultAssetKey + ".jpg")
             );
 
             _dispatcher = dispatcher;
@@ -201,7 +201,7 @@ namespace EasySwitchPresence.ViewModels
             if (Presence.CurrentGame == null)
             {
                 LocalSelectedGameAsset = new BitmapImage(
-                    new Uri(AppContext.ResourcesFolderPath + AppClient.DefaultAssetKey + ".jpg")
+                    new Uri(AppContext.ResourcesFolderPath + RPCManager.DefaultAssetKey + ".jpg")
                 );
             }
             else
@@ -224,7 +224,7 @@ namespace EasySwitchPresence.ViewModels
         // NOTE: Despite invoking this method on the UI thread, there seems to still be an issue with 
         // the rate as which the bound UI timestamp element updates (usually skipping seconds, but staying in sync with time).
         // In the future this should probably be looked into, but for now it is a minor problem that usually 
-        // goes away after a few dozen seconds.
+        // goes away after a couple dozen seconds.
         private void OnCounterSecondElapsed(object sender, EventArgs e)
         {
             if (AppContext.Settings.ShowElapsedTime == true && Presence.CurrentGame != null)

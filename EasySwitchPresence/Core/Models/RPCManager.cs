@@ -87,6 +87,11 @@ namespace EasySwitchPresence.Models
         public string DetailsDefault { get; set; } = "Menus - Idle";
 
         /// <summary>
+        /// Key to default Switch logo asset for use by RPC large or small icon
+        /// </summary>
+        public const string DefaultAssetKey = "spa_000";
+
+        /// <summary>
         /// Fires whenever connection to discord is established or lost
         /// </summary>
         public event EventHandler ConnectionChanged;
@@ -132,7 +137,7 @@ namespace EasySwitchPresence.Models
                 _client.SetPresence(new RichPresence() {
                     Details = DetailsDefault,
                     Assets = new Assets() {
-                        LargeImageKey = AppClient.DefaultAssetKey,
+                        LargeImageKey = DefaultAssetKey,
                         LargeImageText = "Idle"
                     }
                });
@@ -146,7 +151,7 @@ namespace EasySwitchPresence.Models
                 Assets = new Assets() {
                     LargeImageKey = CurrentGame.AssetKey,
                     LargeImageText = $"Playing {CurrentGame.Title}",
-                    SmallImageKey = AppClient.DefaultAssetKey,
+                    SmallImageKey = DefaultAssetKey,
                     SmallImageText = "Nintendo Switch"
                 }
             });
