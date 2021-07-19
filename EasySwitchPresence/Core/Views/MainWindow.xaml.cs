@@ -1,10 +1,12 @@
 ﻿
 using System;
+using System.Diagnostics;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Data;
-using System.ComponentModel;
+using System.Windows.Navigation;
 
 
 
@@ -104,6 +106,13 @@ namespace EasySwitchPresence.Views
                 discordRenderStatus.Margin = new Thickness(105, 23, 0, 0);
                 discordRenderDetails.Margin = new Thickness(105, 40, 0, 0);
             }
+        }
+
+
+        private void repoLinkTextblock_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.ToString()) { UseShellExecute = true });
+            e.Handled = true;
         }
     }
     

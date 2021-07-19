@@ -14,7 +14,7 @@ using EasySwitchPresence.Web;
 namespace EasySwitchPresence.ViewModels
 {
 
-    public class PresenceViewModel : NotifyBase
+    public class PresenceViewModel : NotifyPropertyBase
     {
         /// <summary>
         /// The title selected by the user. Acts as a liason for the Presence.CurrentGame property,
@@ -221,10 +221,9 @@ namespace EasySwitchPresence.ViewModels
         }
 
         
-        // NOTE: Despite invoking this method on the UI thread, there seems to still be an issue with 
-        // the rate as which the bound UI timestamp element updates (usually skipping seconds, but staying in sync with time).
-        // In the future this should probably be looked into, but for now it is a minor problem that usually 
-        // goes away after a couple dozen seconds.
+        // NOTE: Despite invoking this method on the UI thread, there seems to still be an issue with the rate at which the
+        // bound UI timestamp element updates (usually skipping seconds, but staying in sync with time). In the future this
+        // should probably be looked into, but for now it is a minor problem that goes away after a couple dozen seconds.
         private void OnCounterSecondElapsed(object sender, EventArgs e)
         {
             if (AppContext.Settings.ShowElapsedTime == true && Presence.CurrentGame != null)

@@ -277,5 +277,46 @@
             </Button.Resources>
         </Button>
 
+        <TextBlock x:Name="repoLinkTextblock"
+                   Grid.Column="1"
+                   Grid.Row="3"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,73,5"   
+                   FontSize="14"
+                   Foreground="White">
+            
+            <Hyperlink NavigateUri="https://github.com/Natalis-Git/Easy-Switch-Presence"
+                       RequestNavigate="repoLinkTextblock_RequestNavigate">
+                <TextBlock Foreground="White">
+                    Github
+                </TextBlock>   
+            </Hyperlink>
+        </TextBlock>
+
+        <TextBlock x:Name="splitBarTextblock"
+                   Grid.Column="1"
+                   Grid.Row="3"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,5"
+                   Text="|"
+                   FontSize="15"
+                   Foreground="White">
+            
+        </TextBlock>
+
+        <TextBlock x:Name="faqLinkTextblock"
+                   Grid.Column="1"
+                   Grid.Row="3"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Center"
+                   Margin="60,0,0,5"
+                   Text="FAQ"
+                   FontSize="14"
+                   Foreground="White">
+
+        </TextBlock>
+
     </Grid>
 </Window>

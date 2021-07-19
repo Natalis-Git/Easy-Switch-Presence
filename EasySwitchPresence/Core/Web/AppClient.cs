@@ -23,12 +23,12 @@ namespace EasySwitchPresence.Web
         private const string _gameListUri = "https://raw.githubusercontent.com/Natalis-Git/Easy-Switch-Presence/main/EasySwitchPresence/rpcAssets.dat";
         private const string _assetDataUri = "https://discord.com/api/v8/oauth2/applications/819326108196929576/assets";
         private const string _assetStorageUri = "https://cdn.discordapp.com/app-assets/819326108196929576/";
+        private const string _projectUri = "https://raw.githubusercontent.com/Natalis-Git/Easy-Switch-Presence/main/EasySwitchPresence/EasySwitchPresence.csproj";
 
 
         /// <summary>
-        /// Requests initial startup data for AppClient such as assets, version, etc. Should only be called once.
-        /// To ensure data is properly loaded before dependencies need it, this method is fully synchronous and will
-        /// block the calling thread while making requests.
+        /// Requests initial startup data for app. Should only be called once. To ensure data is properly loaded before
+        /// dependencies need it, this method is fully synchronous and will block the calling thread while making requests.
         /// </summary>
         public static void Startup()
         {
@@ -67,6 +67,23 @@ namespace EasySwitchPresence.Web
             response.EnsureSuccessStatusCode();
 
             return await response.Content.ReadAsByteArrayAsync();
+        }
+
+
+        /// <summary>
+        /// Retrieves the latest available version number from remote repository
+        /// </summary>
+        public static async Task<string> GetVersionAsync()
+        {
+            HttpResponseMessage response = await _client.GetAsync(_projectUri);
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+            var element = "<Version>";
+
+            var version = content.Substring(content.IndexOf(element) + element.Length, /* Version number length */ 5);
+
+            return String.Concat(version, ".0");
         }
 
 

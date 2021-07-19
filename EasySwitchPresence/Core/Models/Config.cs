@@ -13,7 +13,7 @@ namespace EasySwitchPresence.Models
     /// <summary>
     /// Very basic class for containing Easy Switch Presence settings
     /// <summary>
-    public class Config : NotifyBase
+    public class Config : NotifyPropertyBase
     {
         /// <summary>
         /// Whether or not Rich Presence will show time elapsed for a displayed game

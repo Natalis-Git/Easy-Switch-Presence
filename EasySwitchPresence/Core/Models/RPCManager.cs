@@ -13,7 +13,7 @@ namespace EasySwitchPresence.Models
     /// <summary>
     /// Rich Presence instance manager; Essentially a wrapper for DiscordRpcClient
     /// </summary>
-    public class RPCManager : NotifyBase
+    public class RPCManager : NotifyPropertyBase
     {      
         /// <summary>
         /// Gets or sets the current game to be displayed by Rich Presence. Refreshes automatically.

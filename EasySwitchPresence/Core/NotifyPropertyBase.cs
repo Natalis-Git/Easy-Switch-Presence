@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 namespace EasySwitchPresence
 {
 
-    public abstract class NotifyBase : INotifyPropertyChanged
+    public abstract class NotifyPropertyBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

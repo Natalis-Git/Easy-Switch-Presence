@@ -29,10 +29,12 @@ namespace EasySwitchPresence.Startup
                 File.WriteAllText(AppContext.LoggerFilePath, String.Empty);
             }
 
+
             DispatcherUnhandledException += (sender, e) => {
                 Logger.UnhandledExceptionDump(e.Exception);
                 e.Handled = true;
             };
+
 
             try
             {
@@ -89,6 +91,8 @@ namespace EasySwitchPresence.Startup
             {
                 mainViewModel.PresenceVM = new PresenceViewModel(presence, supportedGames, Dispatcher);
                 mainViewModel.GameSearchVM = new GameSearchViewModel(supportedGames);
+
+                mainViewModel.PresenceVM.OnGameSelected = mainViewModel.GameSearchVM.ClearSearchEntry;
             }
             catch (Exception err)
             {
@@ -100,7 +104,10 @@ namespace EasySwitchPresence.Startup
                 Shutdown();
             }
             
-            mainViewModel.PresenceVM.OnGameSelected = mainViewModel.GameSearchVM.ClearSearchEntry;
+
+            // Version check
+            CheckForUpdate();
+
 
             _window = new MainWindow();
             _window.DataContext = mainViewModel;
@@ -165,12 +172,23 @@ namespace EasySwitchPresence.Startup
 
             var gameList = new List<Game>();
 
-            foreach (string str in temp)
+            foreach (var str in temp)
             {
                 gameList.Add(new Game(str));
             }
 
             return gameList;
+        }
+
+
+        private async void CheckForUpdate()
+        {
+            string version = await AppClient.GetVersionAsync();
+
+            if (version != AppContext.CurrentVersion)
+            {
+                MessageBox.Show("Update available");
+            }
         }
     }
 
